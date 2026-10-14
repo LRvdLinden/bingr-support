@@ -81,6 +81,6 @@ if (BingrSite.lang === "en") document.title = 'Installing on Android, Android TV
 // Engelse ankers heten <id>-en: met Engels en een #anker daarheen scrollen (ook bij klikken binnen de pagina)
 (function () { function go() { if (BingrSite.lang !== "en" || !location.hash) return; var t = document.getElementById(decodeURIComponent(location.hash.slice(1)) + "-en"); if (t) setTimeout(function () { t.scrollIntoView(); }, 0); } go(); addEventListener("hashchange", go); })();
 </script>
-<script src="../../assets/js/userbtn.js" data-base="https://bingr.online/"></script>
+<script src="../../assets/js/userbtn.js?v=94" data-base="https://bingr.online/"></script>
 </body>
 </html>
