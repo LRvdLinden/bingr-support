@@ -20,7 +20,7 @@
       lbTitle: "Log in voor je eigen apparaten", lbText: "Dan kies je hieronder het apparaat en de app-versie die je gebruikt, en vind je je tickets terug bij Mijn tickets. Support heeft een eigen login: ook als je op bingr.online bent ingelogd, log je hier één keer in.",
       lbExpired: "Je sessie is verlopen. Log opnieuw in om je apparaten te kiezen.", lbSkip: "Zonder inloggen verder", haveAccount: "Heb je een Bingr-account?", lbOpenLink: "Log in om je apparaat te kiezen",
       lbEmailPh: "E-mailadres", lbPassword: "Wachtwoord", lbSignIn: "Inloggen", lbWaiting: "Even geduld…", lbForgot: "Wachtwoord vergeten?", lbNoAcc: "Nog geen account?", lbSignUp: "Maak er een",
-      lbBadCreds: "Onjuist e-mailadres of wachtwoord.", lbNotConfirmed: "Bevestig eerst je e-mailadres. Kijk in je inbox.", lbBadEmail: "Vul een geldig e-mailadres in.", lbNoPw: "Vul je wachtwoord in.",
+      lbBanned: "Je account is geblokkeerd. Je hebt een e-mail gekregen met de reden en tot wanneer. Vragen? Stuur hieronder een bericht, zonder in te loggen.", lbBadCreds: "Onjuist e-mailadres of wachtwoord.", lbNotConfirmed: "Bevestig eerst je e-mailadres. Kijk in je inbox.", lbBadEmail: "Vul een geldig e-mailadres in.", lbNoPw: "Vul je wachtwoord in.",
       lbResetSent: "Bestaat er een account met dit adres, dan ontvang je een e-mail om je wachtwoord opnieuw in te stellen." },
     en: { docTitle: "New ticket · Bingr Support", title: "New ticket", intro: "Describe your question or problem as precisely as possible. You'll get a ticket number and a confirmation by email right away; our reply arrives by email too.",
       name: "Name", email: "Email", category: "What is it about?", platform: "Device", version: "App version", optional: "(optional)", versionPh: "E.g. 1.0.0 (74), shown in My Bingr",
@@ -39,7 +39,7 @@
       lbTitle: "Sign in for your own devices", lbText: "Then you can pick the device and app version you use below, and find your tickets under My tickets. Support has its own sign-in: even if you're signed in on bingr.online, sign in here once.",
       lbExpired: "Your session has expired. Sign in again to choose your devices.", lbSkip: "Continue without signing in", haveAccount: "Have a Bingr account?", lbOpenLink: "Sign in to choose your device",
       lbEmailPh: "Email", lbPassword: "Password", lbSignIn: "Sign in", lbWaiting: "One moment…", lbForgot: "Forgot password?", lbNoAcc: "No account yet?", lbSignUp: "Create one",
-      lbBadCreds: "Incorrect email or password.", lbNotConfirmed: "Confirm your email address first. Check your inbox.", lbBadEmail: "Enter a valid email address.", lbNoPw: "Enter your password.",
+      lbBanned: "Your account has been blocked. You received an email with the reason and until when. Questions? Send a message below, without signing in.", lbBadCreds: "Incorrect email or password.", lbNotConfirmed: "Confirm your email address first. Check your inbox.", lbBadEmail: "Enter a valid email address.", lbNoPw: "Enter your password.",
       lbResetSent: "If an account exists, you'll receive an email to reset your password." },
   });
   const opened = Date.now();
@@ -168,6 +168,12 @@
       dbg("my_devices fout", e);
       devUser = null; genericMode();
       fillVersions([], await loadKnown());
+      if (e && e.code === "user_banned") {
+        // geblokkeerd account: uitloggen, melding in het inlogvak; een vraag sturen kan wel als gast
+        await Bingr.hardSignOut();
+        await refresh(); showLogin(true); $("lbErr").textContent = tr("lbBanned");
+        return;
+      }
       if (e && e.status === 401) {
         // sessie verlopen of ingetrokken: lokaal uitloggen en het inlogvak tonen
         await Bingr.hardSignOut();
@@ -183,6 +189,7 @@
   let expiredHint = false, lbSkipped = false;
   function lbErr(e) {
     const c = (e && (e.code || e.error_code)) || "", m = ((e && e.message) || "").toLowerCase();
+    if (c === "user_banned" || m.includes("banned")) return tr("lbBanned");
     if (c === "invalid_credentials" || m.includes("invalid login")) return tr("lbBadCreds");
     if (c === "email_not_confirmed" || m.includes("not confirmed")) return tr("lbNotConfirmed");
     if (m.includes("fetch") || m.includes("network")) return S.errText({ code: "network" });

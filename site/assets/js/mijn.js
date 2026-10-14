@@ -9,7 +9,7 @@
       myTickets: "Mijn tickets", signedInAs: "Ingelogd als", signOut: "Uitloggen", newTicket: "Nieuw ticket",
       onDevice: "Op dit apparaat", onDeviceText: "Tickets die je in deze browser hebt aangemaakt of geopend.",
       none: "Je hebt nog geen supporttickets.", count1: "1 ticket", countN: "%s tickets", newReply: "Nieuw antwoord",
-      badCreds: "Onjuist e-mailadres of wachtwoord.", notConfirmed: "Bevestig eerst je e-mailadres. Kijk in je inbox.", badEmail: "Vul een geldig e-mailadres in.",
+      banned: "Je account is geblokkeerd. Je hebt een e-mail gekregen met de reden en tot wanneer. Vragen? Ga naar support.bingr.online.", badCreds: "Onjuist e-mailadres of wachtwoord.", notConfirmed: "Bevestig eerst je e-mailadres. Kijk in je inbox.", badEmail: "Vul een geldig e-mailadres in.",
       shortPw: "Je wachtwoord moet minstens 6 tekens hebben.", generic: "Er ging iets mis. Probeer het opnieuw.", waiting: "Even geduld…",
       resetSent: "Bestaat er een account met dit adres, dan ontvang je een e-mail om je wachtwoord opnieuw in te stellen.", last: "laatste activiteit" },
     en: { docTitle: "My tickets · Bingr Support", signIn: "Sign In", authIntro: "Sign in with your Bingr account to see your support tickets.", email: "Email", password: "Password",
@@ -17,7 +17,7 @@
       myTickets: "My tickets", signedInAs: "Signed in as", signOut: "Sign out", newTicket: "New ticket",
       onDevice: "On this device", onDeviceText: "Tickets you created or opened in this browser.",
       none: "You don't have any support tickets yet.", count1: "1 ticket", countN: "%s tickets", newReply: "New reply",
-      badCreds: "Incorrect email or password.", notConfirmed: "Confirm your email address first. Check your inbox.", badEmail: "Enter a valid email address.",
+      banned: "Your account has been blocked. You received an email with the reason and until when. Questions? Go to support.bingr.online.", badCreds: "Incorrect email or password.", notConfirmed: "Confirm your email address first. Check your inbox.", badEmail: "Enter a valid email address.",
       shortPw: "Password must be at least 6 characters.", generic: "Something went wrong. Please try again.", waiting: "One moment…",
       resetSent: "If an account exists, you'll receive an email to reset your password.", last: "last activity" },
   });
@@ -48,12 +48,15 @@
       $("cnt").textContent = items.length === 1 ? tr("count1") : tr("countN").replace("%s", items.length);
       $("tickets").innerHTML = items.map((x) => row({ ...x, last: x.last_reply_at })).join("") || `<p class="empty">${S.esc(tr("none"))}</p>`;
     } catch (e) {
+      // geblokkeerd account (401 user_banned): uitloggen en de melding bij het inloggen
+      if (e.code === "user_banned") { await Bingr.hardSignOut(); await refresh(); $("authErr").textContent = tr("banned"); return; }
       if (e.status === 401) { await Bingr.hardSignOut(); return refresh(); }
       $("tickets").innerHTML = `<p class="empty">${S.esc(S.errText(e))}</p>`;
     }
   }
   function errText(e) {
     const c = (e && (e.code || e.error_code)) || "", m = ((e && e.message) || "").toLowerCase();
+    if (c === "user_banned" || m.includes("banned")) return tr("banned");
     if (c === "invalid_credentials" || m.includes("invalid login")) return tr("badCreds");
     if (c === "email_not_confirmed" || m.includes("not confirmed")) return tr("notConfirmed");
     return tr("generic");
