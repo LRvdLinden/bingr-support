@@ -183,7 +183,7 @@ jobs:
           code=$(curl -sL --max-time 20 -o /tmp/site.html -w '%{http_code}' "$url" || true)
           if grep -q 'name="bingr-app" content="support"' /tmp/site.html 2>/dev/null; then
             echo "::notice::$url toont de supportsite (HTTP $code)"
-            for p in nieuw/ ticket/ mijn/ assets/css/support.css assets/js/support.js; do
+            for p in hulp/ hulp/samsung/ nieuw/ ticket/ mijn/ assets/css/support.css assets/js/support.js; do
               c=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$url$p"); [ "$c" = 200 ] && echo "::notice::/$p: 200" || echo "::warning::/$p gaf HTTP $c"
             done
             curl -sL --max-time 20 "${url}robots.txt" | grep -q 'Disallow: /ticket/' && echo "::notice::robots.txt blokkeert /ticket/" || echo "::warning::robots.txt op $url blokkeert /ticket/ niet"

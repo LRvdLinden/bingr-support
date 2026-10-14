@@ -102,6 +102,73 @@ input.invalid,select.invalid,textarea.invalid{border-color:var(--bad)!important}
 .local h2,.local .lead{padding:0 24px}
 .local .tlist{margin-top:10px;padding:0}
 
+/* hulp: categorieën op de home en /hulp/, artikelen met zijbalk */
+.tbar{margin:-6px 0 0}
+.ticket-cta .acts{display:flex;flex-direction:row;gap:10px;flex-wrap:wrap}
+.h2row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:48px 0 14px}
+.h2row .h2s{margin:0}
+.more{color:var(--sec);text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap}
+.more:hover{color:#fff}
+.hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.hcard{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-decoration:none;padding:22px;transition:border-color .15s,transform .15s}
+.hcard:hover{border-color:#ffffff40;transform:translateY(-2px)}
+.hgrid .panel+.panel,.hcats .panel+.panel{margin-top:0}
+.hcard .ic,.hcat .ic{width:42px;height:42px;border-radius:11px;background:#ffffff14;display:grid;place-items:center;margin-bottom:6px;flex:none}
+.hcard .ic svg,.hcat .ic svg{width:22px;height:22px}
+.hcard .h3{font-size:19px}
+.hcard .lead{flex:1;margin-top:0}
+.hcard .cnt{margin-top:10px;font-size:14px;font-weight:600;color:var(--sec)}
+.hcard:hover .cnt{color:#fff}
+.cards.two{grid-template-columns:1.25fr 1fr}
+.cards.two .card{min-height:0}
+.crumbs{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--dim);margin-bottom:16px}
+.crumbs a{color:var(--sec);text-decoration:none;font-weight:600}
+.crumbs a:hover{color:#fff}
+.hcats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hcat{padding:22px}
+.hcat-h{display:flex;gap:14px;align-items:flex-start;text-decoration:none}
+.hcat-h .h3{display:block;font-size:19px}
+.hcat-h:hover .h3{text-decoration:underline;text-underline-offset:3px}
+.hcat-h .lead{display:block;margin-top:4px}
+.hcat ul{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--line)}
+.hcat li a{display:flex;justify-content:space-between;gap:12px;padding:11px 2px;border-bottom:1px solid var(--line);color:#e2e2e2;text-decoration:none;font-size:15px}
+.hcat li:last-child a{border-bottom:0;padding-bottom:0}
+.hcat li a::after{content:"→";color:var(--dim);transition:transform .15s}
+.hcat li a:hover{color:#fff}
+.hcat li a:hover::after{color:#fff;transform:translateX(3px)}
+.hfoot{margin-top:40px}
+.hfoot .ticket-cta,.hdoc .ticket-cta{margin:0}
+.hdoc{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:56px;align-items:start}
+.hdoc .prose>h2:first-child{margin-top:0}
+.hdoc .prose .ticket-cta{margin-top:44px}
+.hdoc .prose .muted{margin-top:14px}
+.prose kbd{display:inline-block;min-width:26px;text-align:center;background:var(--s2);border:1px solid #ffffff33;border-bottom-width:2px;border-radius:5px;padding:0 6px;font:600 14px/1.6 inherit;color:#fff}
+.hnav{position:sticky;top:96px;display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--line);padding-left:14px}
+.hnav-t{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:0 0 8px 10px}
+.hnav a{display:block;padding:7px 10px;border-radius:7px;color:var(--sec);text-decoration:none;font-size:15px;line-height:1.35}
+.hnav a:hover{color:#fff;background:#ffffff0d}
+.hnav a.on{color:#fff;font-weight:700;background:#ffffff14}
+.hnav .toc{display:flex;flex-direction:column;margin:2px 0 8px}
+.hnav .toc a{font-size:14px;padding:5px 10px 5px 22px;color:var(--dim)}
+.hnav .toc a:hover{color:#fff}
+@media (max-width:900px){
+  .hgrid{grid-template-columns:1fr 1fr}
+  .hdoc{grid-template-columns:1fr;gap:40px}
+  .hnav{position:static;border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:22px}
+  .hnav .toc{display:none}
+}
+@media (max-width:640px){
+  .hgrid,.hcats,.cards.two{grid-template-columns:1fr}
+  .hcard{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}
+  .hcard .ic{margin:0}
+  .hcard .h3{flex:1;min-width:0}
+  .hcard .lead{flex-basis:100%}
+  .hcard .cnt{display:none}
+  .ticket-cta .acts{width:100%}
+  .ticket-cta .acts .btn{flex:1 1 100%}
+  .ticket-cta .acts .btn.red{order:-1}
+}
+
 @media (max-width:820px){
   .cards{grid-template-columns:1fr}
   .card{min-height:0}
