@@ -196,3 +196,22 @@ input.invalid,select.invalid,textarea.invalid{border-color:var(--bad)!important}
 }
 .cards .panel+.panel{margin-top:0}
 nav .links a[aria-current]{color:#fff;font-weight:700}
+
+/* nieuw ticket: inloggen op het formulier (support heeft een eigen login, los van bingr.online) */
+.loginbox{border:1px solid #e5091466;background:linear-gradient(180deg,#e509141a,#e5091408);border-radius:12px;padding:18px 18px 16px;margin:0 0 22px}
+.lbhead{display:flex;gap:14px;justify-content:space-between;align-items:flex-start}
+.loginbox h2{font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.3}
+.lbtext{color:var(--sec);font-size:14px;line-height:1.5;margin-top:4px;max-width:70ch}
+.lbskip{flex:none;background:none;border:0;color:var(--dim);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:2px 0;text-decoration:underline;text-underline-offset:3px}
+.lbskip:hover{color:#fff}
+.lbrow{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-top:14px;align-items:stretch}
+.form .lbrow label{margin-top:0}
+.sub-page .lbrow input:not([type=checkbox]){padding:11px 12px}
+.lbrow .btn{white-space:nowrap}
+.loginbox .err{margin-top:8px}
+.lbfoot{font-size:13px;color:var(--dim);margin-top:10px}
+.lbfoot a{color:#fff;font-weight:600}
+.lbcollapsed{margin:0 0 18px}
+.fhint.bad{color:#ff8a8f}
+.dbg{margin-top:18px;max-height:340px;overflow:auto;background:#0a0a0a;border:1px dashed #ffffff40;border-radius:8px;padding:12px;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cfcfcf;white-space:pre-wrap;word-break:break-word}
+@media (max-width:640px){.lbrow{grid-template-columns:1fr}.lbhead{flex-direction:column;gap:6px}}

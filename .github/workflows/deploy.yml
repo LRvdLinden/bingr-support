@@ -25,6 +25,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Unittests (formulier Nieuw ticket)
+        run: node --test tests/*.test.js
+
       - name: Changelog van bingr.online (buildnummer in de footer)
         id: cl
         run: |

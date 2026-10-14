@@ -14,7 +14,7 @@
 <link rel="icon" href="../favicon.png">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=1">
-<link rel="stylesheet" href="../assets/css/support.css?v=3">
+<link rel="stylesheet" href="../assets/css/support.css?v=4">
 <script src="../assets/js/consent.js" data-base="https://bingr.online/"></script>
 </head>
 <body class="sub-page">
@@ -39,8 +39,22 @@
 <header class="phead" id="head"><h1 class="ttl" data-t="title"></h1><p class="sub" data-t="intro"></p></header>
 <section id="formWrap">
 <div id="who" class="who hidden"><span data-t="signedInAs"></span> <b id="whoMail"></b> · <a href="#" id="signOut" role="button" data-t="signOut"></a></div>
-<div id="loginHint" class="who"><span data-t="haveAccount"></span> <a href="../mijn/?next=nieuw" data-t="signInLink"></a></div>
 <form id="f" class="panel form" novalidate>
+  <!-- niet ingelogd: inloggen hier op het formulier (support.bingr.online heeft een eigen login, los van bingr.online) -->
+  <div id="loginBox" class="loginbox hidden" role="group" aria-labelledby="lbTitle">
+    <div class="lbhead">
+      <div><h2 id="lbTitle" data-t="lbTitle"></h2><p id="lbText" class="lbtext" data-t="lbText"></p></div>
+      <button type="button" id="lbSkip" class="lbskip" data-t="lbSkip"></button>
+    </div>
+    <div class="lbrow">
+      <label><span class="sr" data-t="email"></span><input id="lbEmail" type="email" autocomplete="username" maxlength="254" data-ph="lbEmailPh"></label>
+      <label><span class="sr" data-t="lbPassword"></span><input id="lbPassword" type="password" autocomplete="current-password" data-ph="lbPassword"></label>
+      <button type="button" id="lbBtn" class="btn sm" data-t="lbSignIn"></button>
+    </div>
+    <div id="lbErr" class="err" aria-live="polite"></div>
+    <p class="lbfoot"><a href="#" id="lbForgot" role="button" data-t="lbForgot"></a> · <span data-t="lbNoAcc"></span> <a href="https://bingr.online/koppelen/?mode=signup" data-t="lbSignUp"></a></p>
+  </div>
+  <div id="lbCollapsed" class="who lbcollapsed hidden"><span data-t="haveAccount"></span> <a href="#" id="lbOpen" role="button" data-t="lbOpenLink"></a></div>
   <div class="grid2">
     <label><span class="lbl" data-t="name"></span><input id="name" autocomplete="name" maxlength="80" required></label>
     <label><span class="lbl" data-t="email"></span><input id="email" type="email" autocomplete="email" maxlength="254" required></label>
@@ -50,7 +64,7 @@
       <select id="device" class="hidden"></select>
       <div id="platRow"><label class="sr" for="platform" data-t="platformKind"></label><select id="platform"></select></div>
       <p id="devInfo" class="fhint hidden"></p>
-      <p id="devHint" class="fhint hidden"><a href="../mijn/?next=nieuw" data-t="devLogin"></a></p>
+      <p id="devNote" class="fhint hidden" aria-live="polite"></p>
     </div>
   </div>
   <div class="fld">
@@ -62,6 +76,7 @@
   <label><span class="lbl" data-t="message"></span><textarea id="message" rows="8" maxlength="5000" required data-ph="messagePh"></textarea><span class="count" id="count">0 / 5000</span></label>
   <label class="hp" aria-hidden="true">Website<input id="website" tabindex="-1" autocomplete="off"></label>
   <div id="err" class="err" aria-live="polite"></div>
+  <pre id="dbg" class="dbg hidden" aria-label="debug"></pre>
   <div class="frow"><p class="muted fine" data-t="privacy"></p><button id="send" class="btn" type="submit" data-t="send"></button></div>
 </form>
 </section>
@@ -99,7 +114,8 @@
 <script src="../assets/config.js"></script>
 <script src="../assets/js/account.js?v=80"></script>
 <script src="../assets/js/support.js?v=1"></script>
-<script src="../assets/js/nieuw.js?v=80"></script>
+<script src="../assets/js/nieuw-logic.js?v=82"></script>
+<script src="../assets/js/nieuw.js?v=82"></script>
 <script src="../assets/js/userbtn.js" data-base="https://bingr.online/"></script>
 </body>
 </html>
