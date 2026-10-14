@@ -74,7 +74,9 @@
   </div>
   <label><span class="lbl" data-t="subject"></span><input id="subject" maxlength="120" required data-ph="subjectPh"></label>
   <label><span class="lbl" data-t="message"></span><textarea id="message" rows="8" maxlength="5000" required data-ph="messagePh"></textarea><span class="count" id="count">0 / 5000</span></label>
-  <label class="hp" aria-hidden="true">Website<input id="website" tabindex="-1" autocomplete="off"></label>
+  <!-- lokveld tegen spam: onzichtbaar voor mensen, bots vullen het in. Bewust een naam die browsers niet automatisch
+       invullen (geen "website", "url" of "email"), anders zou een echte klant onterecht tegengehouden worden. -->
+  <div class="hp" aria-hidden="true"><label for="hp_fax">Laat dit veld leeg / leave this field empty</label><input id="hp_fax" name="contact_me_by_fax_only" type="text" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore data-form-type="other" value=""></div>
   <div id="err" class="err" aria-live="polite"></div>
   <pre id="dbg" class="dbg hidden" aria-label="debug"></pre>
   <div class="frow"><p class="muted fine" data-t="privacy"></p><button id="send" class="btn" type="submit" data-t="send"></button></div>

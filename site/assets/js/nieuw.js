@@ -256,7 +256,7 @@
     const data = {
       name: $("name").value.trim(), email: $("email").value.trim(), category: $("category").value, platform: $("platform").value,
       device_id: dev && dev !== OTHER ? dev : "", app_version: ver, subject: $("subject").value.trim(), message: $("message").value.trim(),
-      website: $("website").value, elapsed_ms: Date.now() - opened,
+      website: $("hp_fax").value, elapsed_ms: Date.now() - opened,
     };
     // snelle controle in de browser (de server controleert alles opnieuw)
     const pre = !data.name ? "name_missing" : !/^\S+@\S+\.\S+$/.test(data.email) ? "bad_email" : !data.category ? "bad_category"
