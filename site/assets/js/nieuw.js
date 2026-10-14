@@ -114,7 +114,7 @@
     if (mail) { $("whoMail").textContent = mail; $("email").value = mail; $("email").readOnly = true; loadDevices(s.user); }
     else { $("email").readOnly = false; devUser = null; devLoad++; genericMode(true); }
   }
-  $("signOut").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut({ scope: "local" }).catch(() => {}); $("email").value = ""; refresh(); };
+  $("signOut").onclick = async (e) => { e.preventDefault(); await Bingr.hardSignOut(); $("email").value = ""; refresh(); };
 
   const FIELD = { name: "name", email: "email", category: "category", platform: "platform", subject: "subject", message: "message" };
   $("f").onsubmit = async (e) => {

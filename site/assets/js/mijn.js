@@ -48,7 +48,7 @@
       $("cnt").textContent = items.length === 1 ? tr("count1") : tr("countN").replace("%s", items.length);
       $("tickets").innerHTML = items.map((x) => row({ ...x, last: x.last_reply_at })).join("") || `<p class="empty">${S.esc(tr("none"))}</p>`;
     } catch (e) {
-      if (e.status === 401) { await sb.auth.signOut({ scope: "local" }).catch(() => {}); return refresh(); }
+      if (e.status === 401) { await Bingr.hardSignOut(); return refresh(); }
       $("tickets").innerHTML = `<p class="empty">${S.esc(S.errText(e))}</p>`;
     }
   }
@@ -74,6 +74,6 @@
     await sb.auth.resetPasswordForEmail(email, { redirectTo: "https://bingr.online/reset/" }).catch(() => {});
     $("authErr").innerHTML = '<span class="ok">' + S.esc(tr("resetSent")) + "</span>";
   };
-  $("signOut").onclick = async (e) => { e.preventDefault(); await sb.auth.signOut({ scope: "local" }).catch(() => {}); refresh(); };
+  $("signOut").onclick = async (e) => { e.preventDefault(); await Bingr.hardSignOut(); refresh(); };
   refresh();
 })();
