@@ -1,0 +1,10 @@
+# Bingr Support: werkafspraken
+
+- Deze repo is de supportsite https://support.bingr.online (map `site/`, statisch, geen build-stap). Openbaar: geen geheimen in de repo of in een log. De publieke Supabase-URL en de publishable key (`site/assets/config.js`) mogen er wel in.
+- Huisstijl = bingr.online. `site/assets/css/site.css` en `site/assets/js/{site,consent,userbtn,account}.js` en `site/assets/config.js` zijn kopieën uit LRvdLinden/bingr-website: niet hier aanpassen, maar opnieuw kopiëren als ze daar veranderen. Eigen stijl alleen in `support.css`. Nav en footer gelijk houden aan bingr.online (links absoluut naar https://bingr.online/…). Elke pagina heeft `<meta name="bingr-app" content="support">` (de statusmonitor zoekt daarop).
+- NL en EN: teksten per pagina in het `t({nl, en})`-woordenboek in de paginascripts, of in `data-l="nl"` / `data-l="en"`-blokken. Taalkeuze via `localStorage` `bingr.lang`, zoals op bingr.online.
+- Deploy: workflow *Supportsite* (`.github/workflows/deploy.yml`) bij elke push naar `main` die `site/` raakt: FTPS-upload naar de map van support.bingr.online (eigen FTP-account; nooit de webmap van bingr.online of beheer.bingr.online), daarna controle van https://support.bingr.online/. Secrets alleen als GitHub-secrets (zie README.md). Controleer na elke push met `gh run list -R LRvdLinden/bingr-support` dat de workflow geslaagd is.
+- `ticket/` en `mijn/` blijven `noindex` en staan in `robots.txt` als `Disallow`; de geheime ticketlink (`?n=&t=`) nooit loggen of naar derden sturen (`no-referrer`).
+- De functie `support`, de tabellen `support_tickets` / `support_messages` en de e-mailtemplates staan in LRvdLinden/iptv-ios-appletv (`supabase/`, workflow *Backend*). Het beantwoorden, statussen en notities staan in het beheer (LRvdLinden/bingr-beheer, functie `admin`, tab *Support*).
+- Changelog: wijzigingen aan deze site krijgen een punt met platform `web` in `docs/changelog.json` van iptv-ios-appletv (functie, mails of database: `server`), volgens de werkafspraken daar. Wijzigingen aan de beheerkant nooit.
+- Commitberichten in het Nederlands.

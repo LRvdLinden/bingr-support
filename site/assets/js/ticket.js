@@ -1,0 +1,74 @@
+// Bingr Support: één ticket bekijken en beantwoorden (support.bingr.online/ticket/?n=1001&t=<geheime link>).
+// Zonder t lukt het alleen als je ingelogd bent met het account (of bevestigde e-mailadres) van het ticket.
+(function () {
+  const { $, t, busy, params } = window.Bingr;
+  const S = window.BingrSupport;
+  const tr = t({
+    nl: { docTitle: "Ticket · Bingr Support", loading: "Ticket laden…", ticket: "Supportticket", allTickets: "Mijn tickets",
+      nfTitle: "Ticket niet gevonden", nfText: "Deze link klopt niet (meer), of het ticket hoort bij een ander account. Gebruik de link uit je e-mail, of log in bij Mijn tickets.",
+      myTickets: "Naar Mijn tickets", newTicket: "Nieuw ticket aanmaken", you: "Jij", support: "Bingr Support", statusTo: "Status:",
+      created: "Aangemaakt", category: "Categorie", device: "Apparaat", version: "Versie",
+      yourReply: "Jouw reactie", replyPh: "Typ je reactie…", send: "Reactie versturen", sending: "Versturen…", close: "Ticket sluiten",
+      closeConfirm: "Dit ticket sluiten? Je kunt er daarna niet meer op reageren.", sent: "Je reactie is verstuurd.",
+      closedTitle: "Dit ticket is gesloten.", closedText: "Heb je nog een vraag?" },
+    en: { docTitle: "Ticket · Bingr Support", loading: "Loading ticket…", ticket: "Support ticket", allTickets: "My tickets",
+      nfTitle: "Ticket not found", nfText: "This link is no longer valid, or the ticket belongs to a different account. Use the link from your email, or sign in at My tickets.",
+      myTickets: "Go to My tickets", newTicket: "Create a new ticket", you: "You", support: "Bingr Support", statusTo: "Status:",
+      created: "Created", category: "Category", device: "Device", version: "Version",
+      yourReply: "Your reply", replyPh: "Type your reply…", send: "Send reply", sending: "Sending…", close: "Close ticket",
+      closeConfirm: "Close this ticket? You won't be able to reply to it afterwards.", sent: "Your reply has been sent.",
+      closedTitle: "This ticket is closed.", closedText: "Still have a question?" },
+  });
+  const n = (params.get("n") || "").replace(/^#/, "");
+  const tok = params.get("t") || "";
+  const ref = () => ({ n, ...(tok ? { t: tok } : {}) });
+
+  function msgHtml(m) {
+    if (m.author === "event") return `<div class="msg event">${S.esc(tr("statusTo"))} <b>${S.esc(S.STATUS[m.body] || m.body)}</b> · ${S.esc(S.fmtDateTime(m.created_at))}</div>`;
+    const who = m.author === "support" ? tr("support") : tr("you");
+    return `<div class="msg ${S.esc(m.author)}"><div class="mh"><b>${S.esc(who)}</b><span>${S.esc(S.fmtDateTime(m.created_at))}</span></div><div class="mb">${S.linkify(S.esc(m.body))}</div></div>`;
+  }
+  async function load() {
+    if (!/^\d{1,12}$/.test(n)) return notFound();
+    let r;
+    try { r = await S.api("get", ref()); } catch (e) { return e.code === "not_found" ? notFound() : fail(e); }
+    const tk = r.ticket;
+    if (tok) S.remember(tk.number, tok, tk.subject);
+    document.title = `#${tk.number} ${tk.subject} · Bingr Support`;
+    $("no").textContent = "#" + tk.number;
+    $("badge").innerHTML = S.badge(tk.status);
+    $("subj").textContent = tk.subject;
+    $("meta").innerHTML = [
+      [tr("created"), S.fmtDateTime(tk.created_at)], [tr("category"), S.CATEGORY[tk.category] || tk.category],
+      [tr("device"), tk.platform ? (S.PLATFORM[tk.platform] || tk.platform) : ""], [tr("version"), tk.app_version || ""],
+    ].filter(([, v]) => v).map(([k, v]) => `<span>${S.esc(k)}: <b>${S.esc(v)}</b></span>`).join("");
+    $("thread").innerHTML = (r.messages || []).map(msgHtml).join("");
+    $("rf").classList.toggle("hidden", !tk.can_reply);
+    $("closed").classList.toggle("hidden", !!tk.can_reply);
+    $("loading").classList.add("hidden"); $("tk").classList.remove("hidden");
+  }
+  function notFound() { $("loading").classList.add("hidden"); $("nf").classList.remove("hidden"); }
+  function fail(e) { $("loading").textContent = S.errText(e); }
+
+  $("rf").onsubmit = async (e) => {
+    e.preventDefault();
+    const message = $("msg").value.trim();
+    $("rerr").textContent = "";
+    if (!message) { $("rerr").textContent = S.errText({ code: "message_missing" }); $("msg").focus(); return; }
+    busy($("rsend"), true, tr("sending"));
+    try {
+      await S.api("reply", { ...ref(), message });
+      $("msg").value = "";
+      await load();
+      $("rerr").innerHTML = `<span class="ok">${S.esc(tr("sent"))}</span>`;
+    } catch (err) { $("rerr").textContent = S.errText(err); if (err.code === "closed") load(); }
+    finally { busy($("rsend"), false, tr("send")); }
+  };
+  $("close").onclick = async () => {
+    if (!confirm(tr("closeConfirm"))) return;
+    $("close").disabled = true;
+    try { await S.api("close", ref()); await load(); } catch (err) { $("rerr").textContent = S.errText(err); }
+    finally { $("close").disabled = false; }
+  };
+  load();
+})();

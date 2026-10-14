@@ -1,0 +1,123 @@
+/* Bingr Support: aanvullingen op assets/css/site.css (kopie van bingr.online; daar niets aan wijzigen).
+   Zelfde kleuren, kaarten, knoppen en velden; alleen wat de supportsite extra nodig heeft. */
+.sub-page main>.wrap.mid{max-width:960px}
+.small-note{margin-top:28px}
+.small-note a{color:#fff;font-weight:600}
+
+/* home: drie kaarten */
+.cards{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px}
+.card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-decoration:none;transition:border-color .15s,transform .15s,background .15s;min-height:250px}
+.card:hover{border-color:#ffffff40;transform:translateY(-2px)}
+.card .ic{width:46px;height:46px;border-radius:12px;background:#ffffff14;display:grid;place-items:center;margin-bottom:8px}
+.card .ic svg{width:24px;height:24px}
+.card.hero{background:radial-gradient(ellipse 90% 80% at 0% 100%,#e5091433,transparent 70%),var(--s1);border-color:#e5091466}
+.card.hero .ic{background:var(--red)}
+.card .lead{flex:1}
+.card .btn{margin-top:12px}
+.h2s{font-size:22px;font-weight:800;letter-spacing:-.015em;margin:48px 0 14px}
+.topics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.topic{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#2d2d2d;padding:18px 20px;text-decoration:none;font-size:17px;font-weight:500;transition:background .15s}
+.topic:hover{background:#414141}
+.topic .arr{color:var(--sec);transition:transform .15s}
+.topic:hover .arr{transform:translateX(3px);color:#fff}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+a.need{text-decoration:none;border-color:#ffffff26;transition:border-color .15s}
+a.need:hover{border-color:#ffffff59}
+.need.st .ic{background:#2b2b2b}
+
+/* formulier */
+.form label{display:block;margin-top:16px}
+.form .grid2 label{margin-top:16px}
+.form>label:first-child,.form .grid2{margin-top:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.lbl{display:block;font-size:14px;font-weight:600;color:#e2e2e2;margin-bottom:7px}
+.opt{color:var(--dim);font-weight:500}
+.sub-page textarea{width:100%;font:inherit;font-size:16px;line-height:1.55;color:#fff;background:var(--s2);border:1px solid #ffffff26;border-radius:6px;padding:14px;outline:none;resize:vertical;min-height:120px;transition:border-color .15s;display:block}
+.sub-page textarea:focus{border-color:#fff}
+.sub-page textarea::placeholder{color:#8a8a8a}
+.sub-page select:invalid{color:#8a8a8a}
+.sub-page select option{background:var(--s2);color:#fff}
+.count{display:block;text-align:right;font-size:12px;color:var(--dim);margin-top:6px;font-variant-numeric:tabular-nums}
+.count.warn{color:var(--warn)}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.frow{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px;flex-wrap:wrap}
+.frow.top{margin:0 0 14px}
+.frow .btn{flex:none}
+.fine{font-size:13px;max-width:52ch;line-height:1.5}
+.fine a{color:#fff}
+.who{color:var(--sec);font-size:15px;margin:0 0 14px}
+.who a,.who b{color:#fff}
+.who a{font-weight:600}
+input.invalid,select.invalid,textarea.invalid{border-color:var(--bad)!important}
+
+/* bevestiging */
+.tkno{font-size:clamp(40px,6vw,56px);font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.done .tkno{margin:6px 0 14px}
+.done .alinks{text-align:center}
+
+/* ticketpagina */
+.back{display:inline-block;color:var(--sec);text-decoration:none;font-size:15px;font-weight:600;margin-bottom:18px}
+.back:hover{color:#fff}
+.back::before{content:"← "}
+.tkhead{margin-bottom:26px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.tkrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:4px}
+.tksubj{font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-top:10px;word-break:break-word}
+.tksubj::after{content:"";display:block;width:72px;height:5px;border-radius:5px;background:var(--red);margin-top:16px;box-shadow:0 0 18px #e50914aa}
+.tkmeta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--sec);font-size:14px;margin-top:16px}
+.tkmeta b{color:#fff;font-weight:600}
+.sbadge{display:inline-block;font-size:13px;font-weight:700;border-radius:999px;padding:4px 12px;white-space:nowrap;line-height:1.4;border:1px solid transparent}
+.sbadge.new{background:#e5091426;color:#ff8a8f;border-color:#e5091459}
+.sbadge.open{background:#2f7cf624;color:#8cb8ff;border-color:#2f7cf64d}
+.sbadge.pending{background:#f5a5241f;color:#ffc56b;border-color:#f5a52447}
+.sbadge.resolved{background:#46d36924;color:var(--ok);border-color:#46d36940}
+.sbadge.closed{background:#ffffff14;color:var(--sec);border-color:#ffffff1f}
+.thread{display:flex;flex-direction:column;gap:12px}
+.msg{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:18px 20px;max-width:88%;align-self:flex-start}
+.msg.support{align-self:flex-end;background:linear-gradient(150deg,#2a1013 0%,#171717 70%);border-color:#e5091459}
+.msg .mh{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-size:14px}
+.msg .mh b{font-size:15px}
+.msg.support .mh b{color:#ff8a8f}
+.msg .mh span{color:var(--dim);font-size:13px}
+.msg .mb{margin-top:8px;white-space:pre-wrap;word-break:break-word;color:#e2e2e2;font-size:16px;line-height:1.6}
+.msg .mb a{color:#fff}
+.msg.event{align-self:center;background:none;border:0;padding:2px 0;color:var(--dim);font-size:13px;max-width:none}
+.msg.event b{color:#d6d6d6;font-weight:600}
+.reply{margin-top:22px}
+#closed{margin-top:22px}
+#closed a{color:#fff;font-weight:600}
+
+/* lijsten met tickets */
+.tlist{padding:6px 0}
+.trow{display:grid;grid-template-columns:auto 1fr auto;gap:4px 18px;align-items:center;padding:16px 24px;text-decoration:none;border-top:1px solid var(--line)}
+.trow:first-child{border-top:0}
+.trow:hover{background:#ffffff08}
+.trow .n{font-weight:800;font-variant-numeric:tabular-nums;color:var(--sec)}
+.trow .s{font-weight:700;font-size:16px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .m{grid-column:2 / 3;color:var(--dim);font-size:13px}
+.trow .b{grid-row:1 / span 2;grid-column:3}
+.trow .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:6px;vertical-align:2px;box-shadow:0 0 0 3px #e5091433}
+.tlist .empty{padding:22px 24px;color:var(--sec)}
+.local{max-width:480px;margin:16px auto 0;padding:24px 0 8px}
+.local h2,.local .lead{padding:0 24px}
+.local .tlist{margin-top:10px;padding:0}
+
+@media (max-width:820px){
+  .cards{grid-template-columns:1fr}
+  .card{min-height:0}
+  .topics,.duo{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .grid2{grid-template-columns:1fr}
+  .frow{flex-direction:column-reverse;align-items:stretch}
+  .frow .btn{width:100%}
+  .frow.top{flex-direction:row;align-items:center}
+  .frow.top .btn{width:auto}
+  .msg{max-width:100%;padding:16px}
+  .trow{grid-template-columns:auto 1fr;padding:14px 18px}
+  .trow .b{grid-row:auto;grid-column:1 / -1;justify-self:start}
+  .trow .s{white-space:normal}
+  .topic{padding:16px 18px;font-size:16px}
+}
+.cards .panel+.panel{margin-top:0}
+nav .links a[aria-current]{color:#fff;font-weight:700}

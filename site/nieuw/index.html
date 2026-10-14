@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nieuw ticket · Bingr Support</title>
+<meta name="bingr-app" content="support">
+<meta name="description" content="Maak een supportticket aan voor Bingr.">
+<meta property="og:title" content="Nieuw ticket · Bingr Support">
+<meta property="og:description" content="Maak een supportticket aan voor Bingr.">
+<meta property="og:image" content="https://bingr.online/assets/img/en/tv_home.jpg">
+<link rel="canonical" href="https://support.bingr.online/nieuw/">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/css/site.css?v=1">
+<link rel="stylesheet" href="../assets/css/support.css?v=1">
+<script src="../assets/js/consent.js" data-base="https://bingr.online/"></script>
+</head>
+<body class="sub-page">
+<nav id="nav" aria-label="Hoofdmenu">
+  <div class="wrap">
+    <a href="https://bingr.online/" class="logo" aria-label="Bingr">BINGR</a>
+    <div class="links">
+      <a href="https://bingr.online/index.html#features" data-s="nav.features">Functies</a>
+      <a href="https://bingr.online/index.html#start" data-s="nav.start">Wat heb je nodig</a>
+      <a href="https://bingr.online/index.html#download" data-s="nav.platforms">Apparaten</a>
+      <a href="https://bingr.online/index.html#faq">FAQ</a>
+      <a href="../" aria-current="page">Support</a>
+    </div>
+    <div class="right">
+      <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="nl">NL</button><button type="button" data-lang="en">EN</button></div>
+      <a class="btn red sm navweb" href="https://bingr.online/web/" data-s="nav.web">Kijk in je browser</a>
+      <span data-userbtn style="display:inline-flex"></span>
+    </div>
+  </div>
+</nav>
+<main><div class="wrap mid">
+<header class="phead" id="head"><h1 class="ttl" data-t="title"></h1><p class="sub" data-t="intro"></p></header>
+<section id="formWrap">
+<div id="who" class="who hidden"><span data-t="signedInAs"></span> <b id="whoMail"></b> · <a href="#" id="signOut" role="button" data-t="signOut"></a></div>
+<div id="loginHint" class="who"><span data-t="haveAccount"></span> <a href="../mijn/?next=nieuw" data-t="signInLink"></a></div>
+<form id="f" class="panel form" novalidate>
+  <div class="grid2">
+    <label><span class="lbl" data-t="name"></span><input id="name" autocomplete="name" maxlength="80" required></label>
+    <label><span class="lbl" data-t="email"></span><input id="email" type="email" autocomplete="email" maxlength="254" required></label>
+    <label><span class="lbl" data-t="category"></span><select id="category" required></select></label>
+    <label><span class="lbl" data-t="platform"></span><select id="platform"></select></label>
+  </div>
+  <label><span class="lbl"><span data-t="version"></span> <span class="opt" data-t="optional"></span></span><input id="version" maxlength="40" data-ph="versionPh"></label>
+  <label><span class="lbl" data-t="subject"></span><input id="subject" maxlength="120" required data-ph="subjectPh"></label>
+  <label><span class="lbl" data-t="message"></span><textarea id="message" rows="8" maxlength="5000" required data-ph="messagePh"></textarea><span class="count" id="count">0 / 5000</span></label>
+  <label class="hp" aria-hidden="true">Website<input id="website" tabindex="-1" autocomplete="off"></label>
+  <div id="err" class="err" aria-live="polite"></div>
+  <div class="frow"><p class="muted fine" data-t="privacy"></p><button id="send" class="btn" type="submit" data-t="send"></button></div>
+</form>
+</section>
+<section id="done" class="panel authcard done hidden">
+  <div class="big" aria-hidden="true">✓</div>
+  <h1 data-t="doneTitle"></h1>
+  <div class="tkno" id="doneNo">#1001</div>
+  <p id="doneText"></p>
+  <a id="doneLink" class="btn full" href="#" data-t="viewTicket"></a>
+  <div class="alinks"><a href="../" data-t="backHome"></a></div>
+</section>
+</div></main>
+<footer>
+  <div class="wrap">
+    <div class="top">
+      <div><a href="https://bingr.online/" class="logo">BINGR</a><div style="margin-top:12px" data-s="foot.tag">IPTV zoals het hoort.</div></div>
+      <div class="flinks">
+        <a href="https://bingr.online/index.html#faq">FAQ</a>
+        <a href="../" aria-current="page">Support</a>
+        <a href="https://bingr.online/koppelen/" data-s="foot.pair">Tv koppelen</a>
+        <a href="https://bingr.online/account/" data-s="foot.account">Mijn Bingr</a>
+        <a href="https://bingr.online/web/" data-s="foot.web">Webspeler</a>
+        <a href="https://bingr.online/changelog/">Changelog</a>
+        <a href="https://bingr.online/status/">Status</a>
+        <a href="https://bingr.online/privacy.html" data-s="foot.privacy">Privacy</a>
+        <a href="#" data-consent-link onclick="BingrConsent.open();return false" data-s="foot.cookies">Cookie-instellingen</a>
+      </div>
+    </div>
+    <p class="disc" data-s="foot.disc">Bingr is een mediaspeler en levert, verkoopt of host geen zenders, films of series. Je bent zelf verantwoordelijk voor de content die je afspeelt en het recht om die te bekijken. Apple, iPhone, iPad, Apple TV, Mac en AirPlay zijn handelsmerken van Apple Inc. Android, Google TV en Android TV zijn handelsmerken van Google LLC, Fire TV van Amazon.com, Inc. en Samsung en Tizen van Samsung Electronics Co., Ltd.</p>
+    <p class="copy">© <span id="yr">2026</span> Bingr, <span data-s="foot.version">versie</span> <span data-build></span></p>
+  </div>
+</footer>
+<script src="../assets/js/site.js?v=1" data-base="../"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../assets/config.js"></script>
+<script src="../assets/js/account.js?v=1"></script>
+<script src="../assets/js/support.js?v=1"></script>
+<script src="../assets/js/nieuw.js?v=1"></script>
+<script src="../assets/js/userbtn.js" data-base="https://bingr.online/"></script>
+</body>
+</html>
