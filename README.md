@@ -29,7 +29,7 @@ Limieten tegen spam: 3 nieuwe tickets per e-mailadres en 5 per IP per uur, een v
 
 | Secret | Wat |
 | --- | --- |
-| `FTP_SERVER` | FTP-server: `ftp.bingr.online` (de workflow probeert die ook als terugval) |
+| `FTP_SERVER` | FTP-server; een hostnaam die in het FTPS-certificaat staat (bij gedeelde hosting vaak die van de hoster). Alleen FTPS met een geverifieerd certificaat; er is geen terugval naar gewone FTP of andere servers |
 | `FTP_USERNAME` | gebruikersnaam van een **eigen FTP-account voor support.bingr.online** (komt direct uit in de map van het subdomein) |
 | `FTP_PASSWORD` | het wachtwoord daarvan |
 | `FTP_DIR` | optioneel; alleen nodig als de FTP-login niet direct in de map van support.bingr.online uitkomt |

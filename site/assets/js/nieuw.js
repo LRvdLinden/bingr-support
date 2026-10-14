@@ -6,7 +6,7 @@
     nl: { docTitle: "Nieuw ticket · Bingr Support", title: "Nieuw ticket", intro: "Beschrijf je vraag of probleem zo precies mogelijk. Je krijgt meteen een ticketnummer en een bevestiging per e-mail; ons antwoord komt ook per e-mail.",
       name: "Naam", email: "E-mailadres", category: "Waar gaat het over?", platform: "Apparaat", version: "App-versie", optional: "(optioneel)", versionPh: "Bijv. 1.0.0 (74), staat in Mijn Bingr",
       subject: "Onderwerp", subjectPh: "Kort en duidelijk, bijv. Apple TV blijft hangen bij opstarten", message: "Bericht", messagePh: "Wat gebeurt er, wat had je verwacht, en wat heb je al geprobeerd?",
-      chooseCat: "Kies een categorie", choosePlat: "Kies je apparaat (optioneel)", send: "Ticket versturen", sending: "Versturen…",
+      chooseCat: "Kies een categorie", choosePlat: "Kies je apparaat (optioneel)", send: "Ticket versturen", sending: "Versturen…", checking: "Even controleren…",
       privacy: 'We gebruiken je gegevens alleen om je vraag te beantwoorden. Zie de <a href="https://bingr.online/privacy.html">privacyverklaring</a>.',
       signedInAs: "Ingelogd als", signOut: "Uitloggen",
       doneTitle: "Ticket aangemaakt", doneText: "Bedankt! We hebben je vraag ontvangen en sturen een bevestiging naar <b>%s</b>. Bewaar het ticketnummer; je antwoord komt ook per e-mail.",
@@ -25,7 +25,7 @@
     en: { docTitle: "New ticket · Bingr Support", title: "New ticket", intro: "Describe your question or problem as precisely as possible. You'll get a ticket number and a confirmation by email right away; our reply arrives by email too.",
       name: "Name", email: "Email", category: "What is it about?", platform: "Device", version: "App version", optional: "(optional)", versionPh: "E.g. 1.0.0 (74), shown in My Bingr",
       subject: "Subject", subjectPh: "Short and clear, e.g. Apple TV hangs on startup", message: "Message", messagePh: "What happens, what did you expect, and what have you already tried?",
-      chooseCat: "Choose a category", choosePlat: "Choose your device (optional)", send: "Send ticket", sending: "Sending…",
+      chooseCat: "Choose a category", choosePlat: "Choose your device (optional)", send: "Send ticket", sending: "Sending…", checking: "Checking…",
       privacy: 'We only use your details to answer your question. See the <a href="https://bingr.online/privacy.html">privacy policy</a>.',
       signedInAs: "Signed in as", signOut: "Sign out",
       doneTitle: "Ticket created", doneText: "Thanks! We've received your request and are sending a confirmation to <b>%s</b>. Keep the ticket number; our reply will arrive by email too.",
@@ -43,6 +43,117 @@
       lbResetSent: "If an account exists, you'll receive an email to reset your password." },
   });
   const opened = Date.now();
+
+  // ---- build 95: captcha zonder derde partij (proof-of-work) ----
+  // Bij het openen van het formulier een opgave ophalen (functie support, actie challenge) en die op de achtergrond oplossen:
+  // een nonce zoeken waarbij SHA-256(salt + nonce) met `difficulty` nul-bits begint (gemiddeld 0,5–2 s op een telefoon).
+  // In een Web Worker (inline, via een Blob), gecontroleerd met crypto.subtle; lukt dat niet (oude browser, CSP), dan in stukjes op de
+  // hoofdthread. De opgave is 10 minuten geldig en maar één keer bruikbaar: na elke verzendpoging een nieuwe.
+  const POW_MAX = 50000000, POW_BATCH = 200000, POW_TTL = 9 * 60 * 1000;
+  // Deze functies draaien in de worker (via toString, geen eval: de CSP staat dat niet toe) en anders op de hoofdthread.
+  // Zoeken met een eigen SHA-256 (WebCrypto per hash is te traag: ~20x), het gevonden getal controleren met crypto.subtle.
+  function powZeroBits(b) {
+    let n = 0;
+    for (let i = 0; i < b.length; i++) { const x = b[i]; if (x === 0) { n += 8; continue; } return n + Math.clz32(x) - 24; }
+    return n;
+  }
+  function powSha(salt, d, from, to) {
+    // SHA-256 van salt + nonce (ASCII, < 56 bytes: één blok), zonder WebCrypto: veel sneller voor korte invoer
+    const K = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
+      0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+      0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
+      0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+      0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+      0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2];
+    const W = new Int32Array(64), B = new Uint8Array(64);
+    for (let n = from; n < to; n++) {
+      const s = salt + n, L = s.length;
+      if (L > 55) return null;
+      B.fill(0);
+      for (let i = 0; i < L; i++) B[i] = s.charCodeAt(i) & 0xff;
+      B[L] = 0x80; B[62] = (L * 8) >>> 8; B[63] = (L * 8) & 0xff;
+      for (let i = 0; i < 16; i++) W[i] = (B[i * 4] << 24) | (B[i * 4 + 1] << 16) | (B[i * 4 + 2] << 8) | B[i * 4 + 3];
+      for (let i = 16; i < 64; i++) {
+        const x = W[i - 15], y = W[i - 2];
+        W[i] = (((x >>> 7) | (x << 25)) ^ ((x >>> 18) | (x << 14)) ^ (x >>> 3)) + W[i - 7] + (((y >>> 17) | (y << 15)) ^ ((y >>> 19) | (y << 13)) ^ (y >>> 10)) + W[i - 16] | 0;
+      }
+      let a = 0x6a09e667, b = 0xbb67ae85 | 0, c = 0x3c6ef372, e = 0x510e527f, f = 0x9b05688c | 0, g = 0x1f83d9ab, h = 0x5be0cd19, dd = 0xa54ff53a | 0;
+      for (let i = 0; i < 64; i++) {
+        const t1 = h + (((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7))) + ((e & f) ^ (~e & g)) + K[i] + W[i] | 0;
+        const t2 = (((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10))) + ((a & b) ^ (a & c) ^ (b & c)) | 0;
+        h = g; g = f; f = e; e = dd + t1 | 0; dd = c; c = b; b = a; a = t1 + t2 | 0;
+      }
+      const h0 = (0x6a09e667 + a) >>> 0, h1 = (0xbb67ae85 + b) >>> 0;
+      const z = h0 === 0 ? 32 + Math.clz32(h1) : Math.clz32(h0);
+      if (z >= d) return String(n);
+    }
+    return null;
+  }
+  async function powCheck(salt, nonce, d) {
+    if (typeof crypto === "undefined" || !crypto.subtle) return true;
+    try { return powZeroBits(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(salt + nonce)))) >= d; }
+    catch (e) { return true; }
+  }
+  async function powSolve(salt, d, max, chunk, yieldFn) {
+    for (let n = 0; n < max; n += chunk) {
+      let from = n;
+      for (;;) {
+        const r = powSha(salt, d, from, n + chunk);
+        if (r == null) break;
+        if (await powCheck(salt, r, d)) return r;
+        from = Number(r) + 1;
+      }
+      if (yieldFn) await yieldFn();
+    }
+    return null;
+  }
+  const POW_WORKER = [powZeroBits, powSha, powCheck, powSolve].map((f) => f.toString()).join("\n") + "\n" +
+    "self.onmessage=function(e){var m=e.data;powSolve(m.salt,m.difficulty,m.max,m.batch,null)" +
+    ".then(function(n){self.postMessage({nonce:n});},function(){self.postMessage({error:true});});};";
+  // hoofdthread: in stukjes van 20.000 met een pauze ertussen, zodat de pagina blijft reageren
+  const solveOnMain = (c) => powSolve(c.salt, c.difficulty, POW_MAX, 20000, () => new Promise((r) => setTimeout(r, 0)));
+  function solveChallenge(c) {
+    return new Promise((resolve, reject) => {
+      let w = null, url = null, done = false;
+      const stop = () => { try { if (w) w.terminate(); } catch (e) { /* al gestopt */ } try { if (url) URL.revokeObjectURL(url); } catch (e) { /* niets */ } };
+      const fallback = () => { if (done) return; done = true; stop(); solveOnMain(c).then((n) => (n == null ? reject({ code: "generic" }) : resolve(n)), () => reject({ code: "generic" })); };
+      try {
+        if (!window.Worker || !window.Blob || !window.URL) throw new Error("geen worker");
+        url = URL.createObjectURL(new Blob([POW_WORKER], { type: "text/javascript" }));
+        w = new Worker(url);
+        w.onmessage = (e) => {
+          if (done) return;
+          if (!e.data || e.data.error || e.data.nonce == null) return fallback();
+          done = true; stop(); resolve(e.data.nonce);
+        };
+        w.onerror = (e) => { if (e && e.preventDefault) e.preventDefault(); fallback(); };
+        w.postMessage({ salt: c.salt, difficulty: c.difficulty, max: POW_MAX, batch: POW_BATCH });
+      } catch (e) { fallback(); }
+    });
+  }
+  let powState = null;
+  function startPow() {
+    const st = { at: 0, ready: false, p: null };
+    st.p = (async () => {
+      const c = await S.api("challenge", {}, false);
+      st.at = Date.now(); // eigen klok: een afwijkende klok op het apparaat maakt niet uit
+      const nonce = await solveChallenge(c);
+      st.ready = true;
+      return { salt: c.salt, difficulty: c.difficulty, expires: c.expires, signature: c.signature, nonce };
+    })();
+    st.p.catch(() => {}); // fout: bij versturen opnieuw
+    powState = st;
+    return st;
+  }
+  const powStale = (st) => !st || (st.at && Date.now() - st.at > POW_TTL);
+  async function getPow() {
+    if (powStale(powState)) startPow();
+    try { return await powState.p; } catch (e) { return await startPow().p; }
+  }
+  startPow();
+  // verlopen terwijl het formulier openstaat: alvast een nieuwe, zodat versturen niet hoeft te wachten
+  setInterval(() => { if (powStale(powState)) startPow(); }, 60000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && powStale(powState)) startPow(); });
   $("category").innerHTML = `<option value="" disabled selected>${S.esc(tr("chooseCat"))}</option>` +
     Object.entries(S.CATEGORY).map(([k, v]) => `<option value="${k}">${S.esc(v)}</option>`).join("");
   $("platform").innerHTML = `<option value="">${S.esc(tr("choosePlat"))}</option>` +
@@ -265,8 +376,13 @@
       const f = { name_missing: "name", bad_email: "email", bad_category: "category", subject_missing: "subject", message_too_short: "message" }[pre];
       $("err").textContent = S.errText({ code: pre }); $(f).classList.add("invalid"); $(f).focus(); return;
     }
-    busy($("send"), true, tr("sending"));
+    // build 95: nog bezig met de captcha: "Even controleren…", daarna versturen
+    busy($("send"), true, tr(powState && powState.ready && !powStale(powState) ? "sending" : "checking"));
     try {
+      data.pow = await getPow();
+      busy($("send"), true, tr("sending"));
+      // de opgave is na deze poging gebruikt (ook bij een fout): meteen een nieuwe voor een volgende poging
+      startPow();
       const r = await S.api("create", data);
       S.remember(r.number, r.token, data.subject);
       $("doneNo").textContent = "#" + r.number;
