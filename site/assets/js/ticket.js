@@ -40,7 +40,7 @@
     $("subj").textContent = tk.subject;
     $("meta").innerHTML = [
       [tr("created"), S.fmtDateTime(tk.created_at)], [tr("category"), S.CATEGORY[tk.category] || tk.category],
-      [tr("device"), tk.platform ? (S.PLATFORM[tk.platform] || tk.platform) : ""], [tr("version"), tk.app_version || ""],
+      [tr("device"), [tk.device_name, tk.platform ? (S.PLATFORM[tk.platform] || tk.platform) : ""].filter(Boolean).join(" · ")], [tr("version"), tk.app_version || ""],
     ].filter(([, v]) => v).map(([k, v]) => `<span>${S.esc(k)}: <b>${S.esc(v)}</b></span>`).join("");
     $("thread").innerHTML = (r.messages || []).map(msgHtml).join("");
     $("rf").classList.toggle("hidden", !tk.can_reply);

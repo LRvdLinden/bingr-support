@@ -49,6 +49,14 @@ a.need:hover{border-color:#ffffff59}
 .who a,.who b{color:#fff}
 .who a{font-weight:600}
 input.invalid,select.invalid,textarea.invalid{border-color:var(--bad)!important}
+/* apparaat en app-versie (ingelogd: keuzelijsten met de apparaten van het account) */
+.fld{margin-top:16px;min-width:0}
+.form .fld>label.lbl{margin-top:0}
+#device:not(.hidden)+#platRow,#versionSel:not(.hidden)+input{margin-top:8px}
+.fld select{text-overflow:ellipsis}
+.fhint{font-size:13px;line-height:1.45;color:var(--dim);margin:7px 0 0}
+.fhint a{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#ffffff59}
+.fhint a:hover{text-decoration-color:#fff}
 
 /* bevestiging */
 .tkno{font-size:clamp(40px,6vw,56px);font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
