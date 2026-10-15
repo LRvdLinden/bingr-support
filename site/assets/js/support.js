@@ -70,7 +70,25 @@
   function remember(n, t, subject) {
     try { const l = local().filter((x) => x.n !== n); l.unshift({ n, t, subject, at: new Date().toISOString() }); localStorage.setItem(KEY, JSON.stringify(l.slice(0, 20))); } catch (e) { /* privévenster */ }
   }
+  // build 97: status (en onderwerp) van een onthouden ticket bijwerken (Mijn tickets haalt ze op met de actie get)
+  function patchLocal(n, data) {
+    try {
+      const l = local(), i = l.findIndex((x) => String(x.n) === String(n));
+      if (i < 0) return;
+      if (data === null) l.splice(i, 1); else l[i] = { ...l[i], ...data };
+      localStorage.setItem(KEY, JSON.stringify(l));
+    } catch (e) { /* privévenster */ }
+  }
+  // build 97: het geopende ticket (nummer + geheime link) van dit tabblad; de ticketpagina haalt ze uit de adresbalk
+  const OPEN_KEY = "bingr.support.open";
+  /** build 97: vergeet alle tickets op dit apparaat (lijst in localStorage en het open ticket van dit tabblad). */
+  function forget() {
+    try { localStorage.removeItem(KEY); } catch (e) { /* privévenster */ }
+    try { sessionStorage.removeItem(OPEN_KEY); } catch (e) { /* privévenster */ }
+  }
+  /** build 97: uitloggen op de supportpagina's: ook de onthouden tickets van dit apparaat vergeten. */
+  async function signOut() { forget(); await window.Bingr.hardSignOut(); }
   const ticketHref = (base, n, t) => `${base}ticket/?n=${encodeURIComponent(n)}&t=${encodeURIComponent(t)}`;
 
-  window.BingrSupport = { api, session, errText, esc, linkify, fmtDateTime, ago, badge, STATUS, CATEGORY, PLATFORM, local, remember, ticketHref, nl };
+  window.BingrSupport = { api, session, errText, esc, linkify, fmtDateTime, ago, badge, STATUS, CATEGORY, PLATFORM, local, remember, patchLocal, forget, signOut, OPEN_KEY, ticketHref, nl };
 })();

@@ -354,7 +354,8 @@
       fillVersions([], await loadKnown());
     }
   }
-  $("signOut").onclick = async (e) => { e.preventDefault(); await Bingr.hardSignOut(); $("email").value = ""; refresh(); };
+  // build 97: uitloggen vergeet ook de tickets op dit apparaat
+  $("signOut").onclick = async (e) => { e.preventDefault(); await S.signOut(); $("email").value = ""; refresh(); };
 
   const FIELD = { name: "name", email: "email", category: "category", platform: "platform", subject: "subject", message: "message" };
   $("f").onsubmit = async (e) => {

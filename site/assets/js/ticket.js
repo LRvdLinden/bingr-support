@@ -19,8 +19,23 @@
       closeConfirm: "Close this ticket? You won't be able to reply to it afterwards.", sent: "Your reply has been sent.",
       closedTitle: "This ticket is closed.", closedText: "Still have a question?" },
   });
-  const n = (params.get("n") || "").replace(/^#/, "");
-  const tok = params.get("t") || "";
+  let n = (params.get("n") || "").replace(/^#/, "");
+  let tok = params.get("t") || "";
+  // build 97: de geheime link niet in de adresbalk laten staan (geschiedenis, schermdelen, bladwijzers): n en t gaan naar
+  // sessionStorage van dit tabblad (zo werkt herladen nog) en de URL wordt /ticket/ zonder parameters.
+  if (params.has("n") || params.has("t")) {
+    try { sessionStorage.setItem(S.OPEN_KEY, JSON.stringify({ n, t: tok })); } catch (e) { /* privévenster */ }
+    try {
+      const u = new URL(location.href);
+      u.searchParams.delete("n"); u.searchParams.delete("t");
+      history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+    } catch (e) { /* oude browser: dan blijft de link staan */ }
+  } else {
+    try {
+      const o = JSON.parse(sessionStorage.getItem(S.OPEN_KEY) || "null");
+      if (o && typeof o.n === "string") { n = o.n; tok = typeof o.t === "string" ? o.t : ""; }
+    } catch (e) { /* niets onthouden */ }
+  }
   const ref = () => ({ n, ...(tok ? { t: tok } : {}) });
 
   function msgHtml(m) {

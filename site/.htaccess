@@ -25,7 +25,10 @@ ErrorDocument 404 /404.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
   # build 95: worker-src blob: voor de captcha (proof-of-work in een Web Worker op support.bingr.online/nieuw/)
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://bingr.online https://*.supabase.co; connect-src 'self' https://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  # build 97: supabase-js staat zelf op de site (assets/vendor/, zoals op bingr.online), geen jsDelivr meer; de inline
+  # scripts staan nu in assets/js/page.js, dus script-src alleen 'self'. style-src houdt 'unsafe-inline': consent.js (kopie
+  # van bingr.online) zet een <style>-element en nav/footer (gelijk aan bingr.online) hebben style-attributen.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://bingr.online https://*.supabase.co; connect-src 'self' https://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
   # ticketpagina's (geheime link in de URL) en Mijn tickets: niet indexeren, geen referrer
   <If "%{REQUEST_URI} =~ m#^/(ticket|mijn)(/|$)#">
     Header always set X-Robots-Tag "noindex, nofollow"

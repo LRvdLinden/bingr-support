@@ -215,3 +215,9 @@ nav .links a[aria-current]{color:#fff;font-weight:700}
 .fhint.bad{color:#ff8a8f}
 .dbg{margin-top:18px;max-height:340px;overflow:auto;background:#0a0a0a;border:1px dashed #ffffff40;border-radius:8px;padding:12px;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cfcfcf;white-space:pre-wrap;word-break:break-word}
 @media (max-width:640px){.lbrow{grid-template-columns:1fr}.lbhead{flex-direction:column;gap:6px}}
+/* build 97: Mijn tickets: "Nieuw antwoord" (was een style-attribuut) en de knop "Vergeet tickets op dit apparaat" */
+.trow .new-reply{color:#ff8a8f}
+.local-acts{padding:10px 24px 8px;border-top:1px solid var(--line)}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--sec);text-decoration:underline;cursor:pointer}
+.linkbtn:hover{color:#fff}
+.linkbtn:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:2px}
