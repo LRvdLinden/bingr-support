@@ -3,18 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nieuw ticket · Bingr Support</title>
+<title data-en="New ticket · Bingr Support">Nieuw ticket · Bingr Support</title>
 <meta name="bingr-app" content="support">
-<meta name="description" content="Maak een supportticket aan voor Bingr.">
-<meta property="og:title" content="Nieuw ticket · Bingr Support">
-<meta property="og:description" content="Maak een supportticket aan voor Bingr.">
-<meta property="og:image" content="https://bingr.online/assets/img/en/tv_home.jpg">
-<link rel="canonical" href="https://support.bingr.online/nieuw/">
+<meta name="description" content="Maak een supportticket aan voor Bingr. Je krijgt een ticketnummer en een bevestiging per e-mail; we reageren meestal binnen één werkdag." data-en="Create a support ticket for Bingr. You get a ticket number and a confirmation by email; we usually reply within one business day.">
+<!-- NL/EN: ?lang=nl en ?lang=en zijn de taalversies, zonder ?lang= de browsertaal; canonical via assets/js/site.js -->
+<link rel="alternate" hreflang="nl" href="https://support.bingr.online/nieuw/?lang=nl">
+<link rel="alternate" hreflang="en" href="https://support.bingr.online/nieuw/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://support.bingr.online/nieuw/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bingr Support">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="Nieuw ticket · Bingr Support" data-en="New ticket · Bingr Support">
+<meta property="og:description" content="Maak een supportticket aan voor Bingr. Je krijgt een ticketnummer en een bevestiging per e-mail; we reageren meestal binnen één werkdag." data-en="Create a support ticket for Bingr. You get a ticket number and a confirmation by email; we usually reply within one business day.">
+<meta property="og:url" content="https://support.bingr.online/nieuw/">
+<meta property="og:image" content="https://bingr.online/assets/img/nl/tv_home.jpg">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="788">
+<meta name="twitter:card" content="summary_large_image">
+<!-- structured data (JSON-LD): geen uitvoerbaar script, valt dus niet onder script-src van de CSP -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Support", "item": "https://support.bingr.online/"}, {"@type": "ListItem", "position": 2, "name": "Nieuw ticket", "item": "https://support.bingr.online/nieuw/"}]}</script>
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="../favicon.png">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=2">
-<link rel="stylesheet" href="../assets/css/support.css?v=97">
+<link rel="stylesheet" href="../assets/css/support.css?v=98">
 <script src="../assets/js/consent.js" data-base="https://bingr.online/"></script>
 </head>
 <body class="sub-page">
@@ -22,10 +35,10 @@
   <div class="wrap">
     <a href="https://bingr.online/" class="logo" aria-label="Bingr">BINGR</a>
     <div class="links">
-      <a href="https://bingr.online/index.html#features" data-s="nav.features">Functies</a>
-      <a href="https://bingr.online/index.html#start" data-s="nav.start">Wat heb je nodig</a>
-      <a href="https://bingr.online/index.html#download" data-s="nav.platforms">Apparaten</a>
-      <a href="https://bingr.online/index.html#faq">FAQ</a>
+      <a href="https://bingr.online/#features" data-s="nav.features">Functies</a>
+      <a href="https://bingr.online/#start" data-s="nav.start">Wat heb je nodig</a>
+      <a href="https://bingr.online/#download" data-s="nav.platforms">Apparaten</a>
+      <a href="https://bingr.online/#faq">FAQ</a>
       <a href="../" aria-current="page">Support</a>
     </div>
     <div class="right">
@@ -95,7 +108,7 @@
     <div class="top">
       <div><a href="https://bingr.online/" class="logo">BINGR</a><div style="margin-top:12px" data-s="foot.tag">IPTV zoals het hoort.</div></div>
       <div class="flinks">
-        <a href="https://bingr.online/index.html#faq">FAQ</a>
+        <a href="https://bingr.online/#faq">FAQ</a>
         <a href="../" aria-current="page">Support</a>
         <a href="https://bingr.online/koppelen/" data-s="foot.pair">Tv koppelen</a>
         <a href="https://bingr.online/account/" data-s="foot.account">Mijn Bingr</a>
@@ -112,7 +125,7 @@
     <p class="copy">© <span id="yr">2026</span> Bingr, <span data-s="foot.version">versie</span> <span data-build></span></p>
   </div>
 </footer>
-<script src="../assets/js/site.js?v=2" data-base="../"></script>
+<script src="../assets/js/site.js?v=3" data-base="../"></script>
 <script src="../assets/js/page.js?v=1"></script>
 <script src="../assets/vendor/supabase.js?v=2.45.4"></script>
 <script src="../assets/config.js"></script>

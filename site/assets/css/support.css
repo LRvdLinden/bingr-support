@@ -221,3 +221,15 @@ nav .links a[aria-current]{color:#fff;font-weight:700}
 .linkbtn{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--sec);text-decoration:underline;cursor:pointer}
 .linkbtn:hover{color:#fff}
 .linkbtn:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:2px}
+
+/* hulp/installeren en hulp/samsung: "binnenkort beschikbaar" en de lijst met stores */
+.prose .need.soon{margin:0 0 34px}
+.need.soon p+p{margin-top:12px}
+.prose .stores{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px}
+.prose .stores li{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin:0;padding:14px 16px;border-radius:12px;background:var(--s1);border:1px solid var(--line)}
+.prose .stores li::marker{content:none}
+.stores b{display:block;color:#fff}
+.stores small{display:block;color:var(--sec);font-size:14px;margin-top:2px}
+.stores .tag{flex:none;padding:4px 11px;border-radius:999px;border:1px dashed var(--line);color:var(--sec);font-size:13px;font-weight:700;white-space:nowrap}
+.stores .tag.now{border:0;background:var(--red);color:#fff}
+.prose .stores+p{margin-top:18px}

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Alleen publieke pagina's van support.bingr.online, elk als x-default (browsertaal), ?lang=nl en ?lang=en (zelfde hreflang-set
+     als in de <head>). Niet: ticket/ en mijn/ (privé, noindex) en 404.html. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://support.bingr.online/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/inloggen/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/inloggen/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/inloggen/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/inloggen/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/inloggen/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/inloggen/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/inloggen/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/inloggen/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/inloggen/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/inloggen/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/inloggen/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/inloggen/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/afspeellijst/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/afspeellijst/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/afspeellijst/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/afspeellijst/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/afspeellijst/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/afspeellijst/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/afspeellijst/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/afspeellijst/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/afspeellijst/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/afspeellijst/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/afspeellijst/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/afspeellijst/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/profielen/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/profielen/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/profielen/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/profielen/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/profielen/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/profielen/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/profielen/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/profielen/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/profielen/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/profielen/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/profielen/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/profielen/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/installeren/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/installeren/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/installeren/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/installeren/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/installeren/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/installeren/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/installeren/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/installeren/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/installeren/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/installeren/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/installeren/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/installeren/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/samsung/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/samsung/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/samsung/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/samsung/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/samsung/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/samsung/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/samsung/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/samsung/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/samsung/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/samsung/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/samsung/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/samsung/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/browser/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/browser/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/browser/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/browser/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/browser/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/browser/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/browser/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/browser/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/hulp/browser/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/hulp/browser/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/hulp/browser/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/hulp/browser/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/nieuw/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/nieuw/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/nieuw/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/nieuw/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/nieuw/?lang=nl</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/nieuw/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/nieuw/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/nieuw/"/>
+  </url>
+  <url>
+    <loc>https://support.bingr.online/nieuw/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://support.bingr.online/nieuw/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://support.bingr.online/nieuw/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://support.bingr.online/nieuw/"/>
+  </url>
+</urlset>

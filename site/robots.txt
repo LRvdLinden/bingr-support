@@ -1,6 +1,10 @@
+# support.bingr.online
+# ticket/ (geheime ticketlink) en mijn/ niet ophalen; die pagina's hebben ook noindex (meta en X-Robots-Tag in .htaccess).
 User-agent: *
 Allow: /$
 Allow: /nieuw/
 Allow: /hulp/
 Disallow: /ticket/
 Disallow: /mijn/
+
+Sitemap: https://support.bingr.online/sitemap.xml
