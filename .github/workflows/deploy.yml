@@ -20,12 +20,17 @@ concurrency:
   group: support-deploy
   cancel-in-progress: false
 
+
+# security M5: alleen lezen (deze workflow pusht niets en gebruikt GITHUB_TOKEN alleen voor de checkout)
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5 (v5.1.0)
 
       - name: Unittests (formulier Nieuw ticket)
         run: node --test tests/*.test.js
