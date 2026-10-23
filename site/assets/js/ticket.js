@@ -1,5 +1,7 @@
 // Bingr Support: één ticket bekijken en beantwoorden (support.bingr.online/ticket/?n=1001&t=<geheime link>).
-// Zonder t lukt het alleen als je ingelogd bent met het account (of bevestigde e-mailadres) van het ticket.
+// Zonder t lukt het alleen als je ingelogd bent met het account waaraan het ticket gekoppeld is (security H1: nooit op
+// e-mailadres). Met t en ingelogd kun je een ticket zonder account aan je account koppelen (actie link); dan staat het in
+// Mijn tickets.
 (function () {
   const { $, t, busy, params } = window.Bingr;
   const S = window.BingrSupport;
@@ -10,14 +12,18 @@
       created: "Aangemaakt", category: "Categorie", device: "Apparaat", version: "Versie",
       yourReply: "Jouw reactie", replyPh: "Typ je reactie…", send: "Reactie versturen", sending: "Versturen…", close: "Ticket sluiten",
       closeConfirm: "Dit ticket sluiten? Je kunt er daarna niet meer op reageren.", sent: "Je reactie is verstuurd.",
-      closedTitle: "Dit ticket is gesloten.", closedText: "Heb je nog een vraag?" },
+      closedTitle: "Dit ticket is gesloten.", closedText: "Heb je nog een vraag?",
+      linkText: "Dit ticket hoort nog niet bij je account.", linkBtn: "Koppel aan mijn account", linked: "Het ticket staat nu in Mijn tickets.",
+      linkedElsewhere: "Dit ticket hoort al bij een ander account." },
     en: { docTitle: "Ticket · Bingr Support", loading: "Loading ticket…", ticket: "Support ticket", allTickets: "My tickets",
       nfTitle: "Ticket not found", nfText: "This link is no longer valid, or the ticket belongs to a different account. Use the link from your email, or sign in at My tickets.",
       myTickets: "Go to My tickets", newTicket: "Create a new ticket", you: "You", support: "Bingr Support", statusTo: "Status:",
       created: "Created", category: "Category", device: "Device", version: "Version",
       yourReply: "Your reply", replyPh: "Type your reply…", send: "Send reply", sending: "Sending…", close: "Close ticket",
       closeConfirm: "Close this ticket? You won't be able to reply to it afterwards.", sent: "Your reply has been sent.",
-      closedTitle: "This ticket is closed.", closedText: "Still have a question?" },
+      closedTitle: "This ticket is closed.", closedText: "Still have a question?",
+      linkText: "This ticket isn't linked to your account yet.", linkBtn: "Link to my account", linked: "The ticket is now in My tickets.",
+      linkedElsewhere: "This ticket already belongs to another account." },
   });
   let n = (params.get("n") || "").replace(/^#/, "");
   let tok = params.get("t") || "";
@@ -58,6 +64,8 @@
       [tr("device"), [tk.device_name, tk.platform ? (S.PLATFORM[tk.platform] || tk.platform) : ""].filter(Boolean).join(" · ")], [tr("version"), tk.app_version || ""],
     ].filter(([, v]) => v).map(([k, v]) => `<span>${S.esc(k)}: <b>${S.esc(v)}</b></span>`).join("");
     $("thread").innerHTML = (r.messages || []).map(msgHtml).join("");
+    // alleen geopend met de geheime link en ingelogd, en het ticket hoort nog bij geen account
+    $("linkbox").classList.toggle("hidden", !tk.can_link);
     $("rf").classList.toggle("hidden", !tk.can_reply);
     $("closed").classList.toggle("hidden", !!tk.can_reply);
     $("loading").classList.add("hidden"); $("tk").classList.remove("hidden");
@@ -78,6 +86,15 @@
       $("rerr").innerHTML = `<span class="ok">${S.esc(tr("sent"))}</span>`;
     } catch (err) { $("rerr").textContent = S.errText(err); if (err.code === "closed") load(); }
     finally { busy($("rsend"), false, tr("send")); }
+  };
+  $("linkBtn").onclick = async () => {
+    $("linkBtn").disabled = true;
+    try {
+      await S.api("link", ref());
+      await load();
+      $("rerr").innerHTML = `<span class="ok">${S.esc(tr("linked"))}</span>`;
+    } catch (err) { $("rerr").textContent = err.code === "linked_elsewhere" ? tr("linkedElsewhere") : S.errText(err); }
+    finally { $("linkBtn").disabled = false; }
   };
   $("close").onclick = async () => {
     if (!confirm(tr("closeConfirm"))) return;
