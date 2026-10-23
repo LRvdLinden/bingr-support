@@ -301,6 +301,8 @@
   function lbErr(e) {
     const c = (e && (e.code || e.error_code)) || "", m = ((e && e.message) || "").toLowerCase();
     if (c === "user_banned" || m.includes("banned")) return tr("lbBanned");
+    // build 141: te veel pogingen (functie login of /auth/v1/token), met minuten als de server retry_after geeft
+    if ((e && e.status === 429) || c === "too_many_attempts" || /rate limit|too many/.test(m)) return window.Bingr.tooManyText(e);
     if (c === "invalid_credentials" || m.includes("invalid login")) return tr("lbBadCreds");
     if (c === "email_not_confirmed" || m.includes("not confirmed")) return tr("lbNotConfirmed");
     if (m.includes("fetch") || m.includes("network")) return S.errText({ code: "network" });
@@ -313,7 +315,7 @@
     if (!password) { $("lbErr").textContent = tr("lbNoPw"); $("lbPassword").focus(); return; }
     busy($("lbBtn"), true, tr("lbWaiting"));
     try {
-      const { error } = await sb.auth.signInWithPassword({ email, password });
+      const { error } = await window.Bingr.passwordLogin(email, password, "web"); // build 141: functie login (terugval signInWithPassword)
       if (error) throw error;
       $("lbPassword").value = ""; expiredHint = false;
       await refresh();

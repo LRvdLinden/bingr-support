@@ -11,7 +11,7 @@
       forgetLocal: "Vergeet tickets op dit apparaat", forgetConfirm: "De tickets van dit apparaat vergeten? De tickets zelf blijven bestaan; je opent ze weer met de link uit je e-mail.", forgotten: "Tickets op dit apparaat vergeten.",
       none: "Je hebt nog geen supporttickets.", count1: "1 ticket", countN: "%s tickets", newReply: "Nieuw antwoord",
       banned: "Je account is geblokkeerd. Je hebt een e-mail gekregen met de reden en tot wanneer. Vragen? Ga naar support.bingr.online.", badCreds: "Onjuist e-mailadres of wachtwoord.", notConfirmed: "Bevestig eerst je e-mailadres. Kijk in je inbox.", badEmail: "Vul een geldig e-mailadres in.",
-      shortPw: "Je wachtwoord moet minstens 6 tekens hebben.", generic: "Er ging iets mis. Probeer het opnieuw.", waiting: "Even geduld…",
+      shortPw: "Vul je wachtwoord in.", generic: "Er ging iets mis. Probeer het opnieuw.", waiting: "Even geduld…",
       resetSent: "Bestaat er een account met dit adres, dan ontvang je een e-mail om je wachtwoord opnieuw in te stellen.", last: "laatste activiteit" },
     en: { docTitle: "My tickets · Bingr Support", signIn: "Sign In", authIntro: "Sign in with your Bingr account to see your support tickets.", email: "Email", password: "Password",
       show: "Show", hide: "Hide", forgot: "Forgot password?", noAccount: "No account?", newTicketPlain: "You can also create a ticket without one.",
@@ -20,7 +20,7 @@
       forgetLocal: "Forget tickets on this device", forgetConfirm: "Forget the tickets on this device? The tickets themselves are kept; open them again with the link from your email.", forgotten: "Tickets on this device forgotten.",
       none: "You don't have any support tickets yet.", count1: "1 ticket", countN: "%s tickets", newReply: "New reply",
       banned: "Your account has been blocked. You received an email with the reason and until when. Questions? Go to support.bingr.online.", badCreds: "Incorrect email or password.", notConfirmed: "Confirm your email address first. Check your inbox.", badEmail: "Enter a valid email address.",
-      shortPw: "Password must be at least 6 characters.", generic: "Something went wrong. Please try again.", waiting: "One moment…",
+      shortPw: "Enter your password.", generic: "Something went wrong. Please try again.", waiting: "One moment…",
       resetSent: "If an account exists, you'll receive an email to reset your password.", last: "last activity" },
   });
   pwToggles(tr);
@@ -92,6 +92,7 @@
   function errText(e) {
     const c = (e && (e.code || e.error_code)) || "", m = ((e && e.message) || "").toLowerCase();
     if (c === "user_banned" || m.includes("banned")) return tr("banned");
+    if ((e && e.status === 429) || c === "too_many_attempts" || /rate limit|too many/.test(m)) return Bingr.tooManyText(e); // build 141
     if (c === "invalid_credentials" || m.includes("invalid login")) return tr("badCreds");
     if (c === "email_not_confirmed" || m.includes("not confirmed")) return tr("notConfirmed");
     return tr("generic");
@@ -100,9 +101,10 @@
     e.preventDefault();
     const email = $("email").value.trim(), password = $("password").value;
     if (!/^\S+@\S+\.\S+$/.test(email)) return ($("authErr").textContent = tr("badEmail"));
-    if (password.length < 6) return ($("authErr").textContent = tr("shortPw"));
+    // build 141: alleen inloggen hier; een ouder wachtwoord van minder dan 8 tekens werkt nog
+    if (!password) return ($("authErr").textContent = tr("shortPw"));
     busy($("authBtn"), true, tr("waiting")); $("authErr").textContent = "";
-    try { const { error } = await sb.auth.signInWithPassword({ email, password }); if (error) throw error; await refresh(); }
+    try { const { error } = await Bingr.passwordLogin(email, password, "web"); if (error) throw error; await refresh(); } // build 141: functie login
     catch (err) { $("authErr").textContent = errText(err); }
     finally { busy($("authBtn"), false, tr("signIn")); }
   };
